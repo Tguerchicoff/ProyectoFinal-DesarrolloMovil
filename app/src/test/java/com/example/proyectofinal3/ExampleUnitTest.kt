@@ -1,17 +1,28 @@
 package com.example.proyectofinal3
 
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
-import org.junit.Assert.*
+class StringComparatorTest {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
+    private lateinit var stringComparator: StringComparator
+
+    @Before
+    fun setup() {
+        stringComparator = StringComparator()
+    }
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun testCompare_sameStrings() {
+        val result = stringComparator.compare("Hello", "Hello")
+        assertTrue(result)
+    }
+
+    @Test
+    fun testCompare_differentStrings() {
+        val result = stringComparator.compare("Hello", "World")
+        assertFalse(result)
     }
 }

@@ -1,14 +1,13 @@
 package com.example.proyectofinal3
 
 import androidx.appcompat.app.AppCompatActivity
+import android.animation.ValueAnimator
+import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.animation.ValueAnimator
 import androidx.core.content.ContextCompat
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var editText2: EditText
     private lateinit var compareButton: Button
     private lateinit var resultText: TextView
+    private lateinit var stringComparator: StringComparator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         editText2 = findViewById(R.id.editText2)
         compareButton = findViewById(R.id.compareButton)
         resultText = findViewById(R.id.resultText)
+
+        stringComparator = StringComparator()
 
         compareButton.setOnClickListener {
             compareStrings()
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val result: String
         val colorAnimation: ValueAnimator
 
-        if (text1 == text2) {
+        if (stringComparator.compare(text1, text2)) {
             result = getString(R.string.same_text)
             colorAnimation = ValueAnimator.ofArgb(
                 ContextCompat.getColor(this, R.color.color1),
@@ -60,9 +62,8 @@ class MainActivity : AppCompatActivity() {
             resultText.setBackgroundColor(animator.animatedValue as Int)
         }
         colorAnimation.start()
-        if (text1 != text2) {
+        if (!stringComparator.compare(text1, text2)) {
             resultText.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
         }
     }
-
 }
